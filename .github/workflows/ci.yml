@@ -9,10 +9,6 @@ jobs:
     name: 🔍 Lint & Build Frontend
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: ./sffront  # Update if your folder differs
-
     steps:
       - name: 🧾 Checkout Repository
         uses: actions/checkout@v3
