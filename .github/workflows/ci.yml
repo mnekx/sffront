@@ -1,0 +1,36 @@
+name: CI - Frontend Lint & Build
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  frontend-ci:
+    name: 🔍 Lint & Build Frontend
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./sffront  # Update if your folder differs
+
+    steps:
+      - name: 🧾 Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: 🧰 Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: 📦 Install Dependencies
+        run: npm ci
+
+      - name: 🧹 Run ESLint
+        run: npm run lint
+
+      - name: 🏗️ Build App
+        run: npm run build
+
+      # testing
+      # - name: 🧪 Run Tests
+      #   run: npm test
