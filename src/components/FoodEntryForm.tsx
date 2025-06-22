@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import { foodRecords as initialFoodRecords } from "../data/foodRecords";
 
 const FOOD_TYPES = ["Maize", "Beans", "Rice"];
@@ -17,6 +18,7 @@ export default function FoodEntryForm() {
 	// Simulated DB
 	const [foodRecords, setFoodRecords] = useState(initialFoodRecords);
 
+	const [changedTypes, setChangedTypes] = useState<string[]>([]);
 	// Calculate balances from foodRecords
 	function getCurrentBalance(type: string) {
 		let sum = 0;
@@ -88,8 +90,12 @@ export default function FoodEntryForm() {
 			}));
 			// TODO: send to backend!
 			setFoodRecords([...foodRecords, ...newRecords]);
-
+			setChangedTypes(rows.map((row) => row.foodType));
 			setTimeout(() => setSubmitted(false), 2000);
+			setTimeout(() => {
+				setChangedTypes([]);
+			}, 1200);
+			handleReset();
 		}
 	}
 
@@ -326,11 +332,20 @@ export default function FoodEntryForm() {
 						</thead>
 						<tbody>
 							{FOOD_TYPES.map((type) => (
-								<tr key={type}>
+								<motion.tr
+									key={type}
+									animate={
+										changedTypes.includes(type)
+											? { scale: 1.06, backgroundColor: "#fef08a" }
+											: { scale: 1, backgroundColor: "#fff" }
+									}
+									transition={{ type: "spring", stiffness: 350, damping: 18 }}
+									style={{ cursor: "pointer", originX: 0.5 }}
+								>
 									<td className="px-4 py-2">{type}</td>
 									<td className="px-4 py-2">{getCurrentBalance(type)}</td>
 									<td className="px-4 py-2">{predictedBalance(type)}</td>
-								</tr>
+								</motion.tr>
 							))}
 						</tbody>
 					</table>
