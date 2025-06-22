@@ -2,8 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import FoodEntryForm from "./components/FoodEntryForm";
 import Dashboard from "./components/Dashboard";
 import NotFound from "./components/NotFound";
-import SideBar from "./components/Sidebar";
 import TopBar from "./components/TopBar";
+import SideBar from "./components/SideBar";
 
 function App() {
 	return (

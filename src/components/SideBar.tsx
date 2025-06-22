@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 
-export function SideBar() {
+function SideBar() {
 	const { pathname } = useLocation();
 	const links = [
 		{ path: "/", label: "Dashboard" },
