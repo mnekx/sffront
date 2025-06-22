@@ -1,6 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { foodRecords as initialFoodRecords } from "../data/foodRecords";
+import {
+	Wheat,
+	Soup,
+	Leaf,
+	ArrowDownLeft,
+	ArrowUpRight,
+	PlusCircle,
+	MinusCircle,
+	StickyNote,
+	UserCheck,
+	Undo2,
+	CheckCircle,
+	RotateCcw,
+} from "lucide-react";
 
 const FOOD_TYPES = ["Maize", "Beans", "Rice"];
 const SOURCES = ["Parents", "Govt", "Harvest"];
@@ -13,6 +27,13 @@ function getBadgeColor(type: string) {
 	if (type === "Beans") return "bg-green-100 text-green-800 border-green-400";
 	if (type === "Rice") return "bg-blue-100 text-blue-800 border-blue-400";
 	return "bg-gray-100 text-gray-800 border-gray-300";
+}
+
+function getBadgeIcon(type: string) {
+	if (type === "Maize") return <Wheat className="w-4 h-4 mr-2 inline" />;
+	if (type === "Beans") return <Soup className="w-4 h-4 mr-2 inline" />;
+	if (type === "Rice") return <Leaf className="w-4 h-4 mr-2 inline" />;
+	return null;
 }
 
 const LOCAL_STORAGE_KEY = "food_records_db";
@@ -182,7 +203,10 @@ export default function FoodEntryForm() {
 						)}`}
 						style={{ minWidth: 110, justifyContent: "center" }}
 					>
-						<span>{type}</span>
+						<span>
+							{getBadgeIcon(type)}
+							{type}
+						</span>
 						<span className="ml-2 font-bold">{getCurrentBalance(type)}kg</span>
 					</motion.div>
 				))}
@@ -209,6 +233,7 @@ export default function FoodEntryForm() {
 							}`}
 							onClick={() => setMovementType("incoming")}
 						>
+							<ArrowDownLeft className="inline w-4 h-4 mr-1" />
 							Incoming
 						</button>
 						<button
@@ -220,6 +245,7 @@ export default function FoodEntryForm() {
 							}`}
 							onClick={() => setMovementType("outgoing")}
 						>
+							<ArrowUpRight className="inline w-4 h-4 mr-1" />
 							Outgoing
 						</button>
 					</div>
@@ -289,6 +315,7 @@ export default function FoodEntryForm() {
 											)}
 										</td>
 										<td className="px-1 sm:px-2 py-1">
+											<UserCheck className="inline w-4 h-4 mr-1 text-gray-400" />
 											{movementType === "incoming" ? (
 												<select
 													className={`border rounded-lg px-2 py-1 w-full md:w-28 ${
@@ -326,6 +353,7 @@ export default function FoodEntryForm() {
 											)}
 										</td>
 										<td className="px-1 sm:px-2 py-1">
+											<StickyNote className="inline w-4 h-4 mr-1 text-yellow-500" />
 											<input
 												type="text"
 												className="border rounded-lg px-2 py-1 w-full md:w-40"
@@ -344,7 +372,7 @@ export default function FoodEntryForm() {
 													onClick={() => removeRow(idx)}
 													aria-label="Remove row"
 												>
-													✕
+													<MinusCircle className="inline w-4 h-4 text-red-600" />
 												</button>
 											)}
 										</td>
@@ -358,23 +386,26 @@ export default function FoodEntryForm() {
 						className="px-3 py-1 mb-4 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200"
 						onClick={addRow}
 					>
-						+ Add Another Food Item
+						<PlusCircle className="inline w-5 h-5 mr-1" />
+						Add Another Food Item
 					</button>
 					{/* On md+ screens, show action buttons inline */}
 					<div className="hidden sm:flex flex-row gap-2 mt-2">
 						<button
 							type="submit"
-							className="bg-blue-600 text-white px-6 py-2 rounded-xl hover:bg-blue-700 w-full sm:w-auto"
+							className="bg-blue-600 text-white px-6 py-2 rounded-xl hover:bg-blue-700 w-full sm:w-auto flex items-center justify-center gap-2"
 							disabled={submitted}
 						>
-							{submitted ? "Submitted!" : "✅ Submit"}
+							<CheckCircle className="w-5 h-5" />
+							{submitted ? "Submitted!" : "Submit"}
 						</button>
 						<button
 							type="button"
-							className="bg-gray-300 px-6 py-2 rounded-xl text-gray-700 hover:bg-gray-400 w-full sm:w-auto"
+							className="bg-gray-300 px-6 py-2 rounded-xl text-gray-700 hover:bg-gray-400 w-full sm:w-auto flex items-center justify-center gap-2"
 							onClick={handleReset}
 						>
-							🔄 Reset All
+							<RotateCcw className="w-5 h-5" />
+							Reset
 						</button>
 					</div>
 				</form>
@@ -382,18 +413,20 @@ export default function FoodEntryForm() {
 				<div className="sm:hidden fixed bottom-0 left-0 w-full z-20 bg-white border-t flex gap-2 px-4 py-3 shadow-lg">
 					<button
 						type="button"
-						className="bg-blue-600 text-white px-6 py-2 rounded-xl flex-1"
+						className="bg-blue-600 text-white px-6 py-2 rounded-xl flex-1 flex items-center justify-center gap-2"
 						onClick={handleSubmit}
 						disabled={submitted}
 					>
-						{submitted ? "Submitted!" : "✅ Submit"}
+						<CheckCircle className="w-5 h-5" />
+						{submitted ? "Submitted!" : "Submit"}
 					</button>
 					<button
 						type="button"
-						className="bg-gray-300 px-6 py-2 rounded-xl text-gray-700 flex-1"
+						className="bg-gray-300 px-6 py-2 rounded-xl text-gray-700 flex-1 flex items-center justify-center gap-2"
 						onClick={handleReset}
 					>
-						🔄 Reset
+						<RotateCcw className="w-5 h-5" />
+						Reset
 					</button>
 				</div>
 			</div>
@@ -563,7 +596,7 @@ export default function FoodEntryForm() {
 												className="text-red-500 underline text-xs"
 												onClick={() => handleUndo(idx)}
 											>
-												Undo
+												<Undo2 className="inline w-4 h-4 mr-1" /> Undo
 											</button>
 										</td>
 									</motion.tr>
