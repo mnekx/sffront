@@ -116,7 +116,7 @@ export default function FoodEntryForm() {
 		if (validate()) {
 			setSubmitted(true);
 			const newRecords = rows.map((row) => ({
-				date: new Date().toISOString().slice(0, 10),
+				date: new Date().toISOString(),
 				foodType: row.foodType,
 				quantity: Number(row.quantity),
 				movementType,
@@ -479,7 +479,7 @@ export default function FoodEntryForm() {
 				<table className="min-w-[340px] md:min-w-full bg-white shadow rounded-xl overflow-hidden text-sm">
 					<thead>
 						<tr className="bg-gray-100 text-left">
-							<th className="px-3 py-2">Date</th>
+							<th className="px-3 py-2">Date/time</th>
 							<th className="px-3 py-2">Food</th>
 							<th className="px-3 py-2">Type</th>
 							<th className="px-3 py-2">Qty (kg)</th>
@@ -570,7 +570,17 @@ export default function FoodEntryForm() {
 										exit={{ opacity: 0, x: 30 }}
 										transition={{ duration: 0.24 }}
 									>
-										<td className="px-3 py-1">{rec.date}</td>
+										<td className="px-3 py-1">
+											{typeof rec.date === "string" || typeof rec.date === "number"
+												? new Date(rec.date).toLocaleString(undefined, {
+														year: "numeric",
+														month: "short",
+														day: "numeric",
+														hour: "2-digit",
+														minute: "2-digit",
+												  })
+												: ""}
+										</td>
 										<td className="px-3 py-1">{rec.foodType}</td>
 										<td
 											className={`px-3 py-1 ${
