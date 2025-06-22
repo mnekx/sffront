@@ -475,7 +475,7 @@ export default function FoodEntryForm() {
 			</div>
 
 			{/* --- Transaction Records Table --- */}
-			<div className="overflow-x-auto max-h-96 md:max-h-[500px] overflow-y-auto rounded-xl">
+			<div className="overflow-x-auto max-h-96 md:max-h-[500px] overflow-y-auto rounded-xl scrollbar-thin scrollbar-thumb-indigo-300 scrollbar-track-gray-100">
 				<table className="min-w-[340px] md:min-w-full bg-white shadow rounded-xl overflow-hidden text-sm">
 					<thead>
 						<tr className="bg-gray-100 text-left">
@@ -571,7 +571,8 @@ export default function FoodEntryForm() {
 										transition={{ duration: 0.24 }}
 									>
 										<td className="px-3 py-1">
-											{typeof rec.date === "string" || typeof rec.date === "number"
+											{typeof rec.date === "string" ||
+											typeof rec.date === "number"
 												? new Date(rec.date).toLocaleString(undefined, {
 														year: "numeric",
 														month: "short",
