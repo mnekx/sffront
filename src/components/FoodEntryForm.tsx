@@ -475,7 +475,7 @@ export default function FoodEntryForm() {
 			</div>
 
 			{/* --- Transaction Records Table --- */}
-			<div className="overflow-x-auto mb-8">
+			<div className="overflow-x-auto max-h-96 md:max-h-[500px] overflow-y-auto rounded-xl">
 				<table className="min-w-[340px] md:min-w-full bg-white shadow rounded-xl overflow-hidden text-sm">
 					<thead>
 						<tr className="bg-gray-100 text-left">
